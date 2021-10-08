@@ -1,14 +1,18 @@
-// import {combineReducers} from 'redux';
-// import AsyncStorage from '@react-native-community/async-storage';
-// import persistReducer from 'redux-persist/es/persistReducer';
-// import {auth} from './auth';
+import {combineReducers} from 'redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import persistReducer from 'redux-persist/es/persistReducer';
 
-// const persistAuth = {
-//   storage: AsyncStorage,
-// };
+import auth from './auth';
+import discover from './discover';
 
-// const reducer = combineReducers({
-//   auth: persistReducer(auth, persistAuth),
-// });
+const persistAuth = {
+  storage: AsyncStorage,
+  key: 'auth',
+};
 
-// export default reducer;
+const reducer = combineReducers({
+  auth: persistReducer(persistAuth, auth),
+  discover,
+});
+
+export default reducer;

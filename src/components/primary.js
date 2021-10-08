@@ -9,6 +9,7 @@ import {
   Image,
   Modal,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native';
 
 export const ScreenWidth = Dimensions.get('window').width;
@@ -44,6 +45,14 @@ export const PrimaryModal = ({open, modal, str}) => {
         </TouchableWithoutFeedback>
       </TouchableOpacity>
     </Modal>
+  );
+};
+
+export const PrimarySpinner = () => {
+  return (
+    <View style={styles.contentWrapper}>
+      <ActivityIndicator size="large" color="#fff" />
+    </View>
   );
 };
 

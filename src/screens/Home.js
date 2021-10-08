@@ -1,10 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {Movies, Streaming} from '../components/HomeCategories';
 import {HomeHeader, HomeHeader2nd, HomeInfo} from '../components/headers';
+import {useDispatch} from 'react-redux';
+import {getMovies} from '../redux/actions/discover';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const [page, setPage] = React.useState(1);
+
+  React.useEffect(() => {
+    dispatch(getMovies(page));
+  }, [page]);
+
   return (
     <View style={{flex: 1, padding: 50, backgroundColor: '#001'}}>
       <HomeInfo func={() => navigation.navigate('profile')} />
@@ -17,15 +28,5 @@ const Home = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  movieImgWrapper: {
-    // padding: 20,
-    // backgroundColor: '#000',
-    // flexDirection: 'row',
-    // width: ScreenWidth / 2,
-    borderRadius: 15,
-  },
-});
 
 export default Home;

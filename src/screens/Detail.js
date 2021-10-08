@@ -1,25 +1,32 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import bg from '../assets/signin.jpg';
 import {BackGroundImage, ContentWrapper} from '../components/primary';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import {image} from '../helpers/request';
+import {useSelector} from 'react-redux';
 
 const Detail = () => {
+  const {moviePopularDetails} = useSelector(state => state.discover);
+  const getGenres = moviePopularDetails.genres.map(e => e.name);
   return (
     <View>
-      <BackGroundImage src={bg} />
+      <BackGroundImage
+        src={{uri: `${image}/${moviePopularDetails.poster_path}`}}
+      />
       <ContentWrapper
         content={
           <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 25}}>
             <View>
-              <Text style={styles.descriptionText}>Movie Title</Text>
+              <Text style={styles.descriptionText}>
+                {moviePopularDetails.title}
+              </Text>
               <View style={{flexDirection: 'row', paddingVertical: 20}}>
                 <Entypo name="tv" size={25} color="#fff" />
                 <View style={{padding: 10}} />
-                <Text style={styles.secondaryText}>Genre, Genre</Text>
+                <Text style={styles.secondaryText}>{getGenres.join(', ')}</Text>
                 <View
                   style={{
                     padingHorizontal: 10,
@@ -38,9 +45,9 @@ const Detail = () => {
                     marginVertical: 10,
                     color: 'rgb(224, 224, 224)',
                   }}>
-                  Moview Motto
+                  {moviePopularDetails.tagline}
                 </Text>
-                <View>
+                <View style={{paddingTop: 50}}>
                   <Text
                     style={{
                       fontFamily: 'Poppins-SemiBold',
@@ -51,19 +58,7 @@ const Detail = () => {
                     Overview
                   </Text>
                   <Text style={styles.primaryText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Cras vitae fermentum ligula. Nulla feugiat, justo ut rhoncus
-                    dapibus, nisi tortor efficitur enim, et porttitor est ex eu
-                    purus. Nam luctus, mi ut bibendum condimentum, urna ante
-                    volutpat libero, ultrices vulputate velit libero vel purus.
-                    Aenean auctor metus justo, et tristique justo semper vel.
-                    Quisque ornare suscipit velit ut faucibus. Curabitur nunc
-                    urna, vestibulum in odio in, aliquet fermentum metus.
-                    Phasellus eget turpis ut elit dictum rutrum. Vestibulum
-                    mollis vulputate purus in laoreet. Nam sollicitudin, tortor
-                    ut auctor elementum, dui mi imperdiet mauris, eu tincidunt
-                    enim leo id nunc. Vivamus suscipit nulla sit amet nibh
-                    volutpat lobortis.
+                    {moviePopularDetails.overview}
                   </Text>
                 </View>
               </View>
@@ -95,7 +90,9 @@ const Detail = () => {
               </View>
               <View style={{paddingVertical: 25}}>
                 <View style={styles.primaryWrapper}>
-                  <Text style={styles.primaryText}>80%</Text>
+                  <Text style={styles.primaryText}>
+                    {(moviePopularDetails.vote_average + '').replace('.', '')}%
+                  </Text>
                 </View>
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                   <Text style={styles.primaryText}>User</Text>

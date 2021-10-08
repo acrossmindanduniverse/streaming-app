@@ -1,11 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
 import tmdbBg from '../assets/tmdb-logo.png';
 import {ScreenWidth} from './../components/primary';
+import {createGuestSession, createRequestToken} from './../redux/actions/auth';
 
 const Welcome = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(createGuestSession());
+    dispatch(createRequestToken());
+  }, []);
+
   return (
     <View style={styles.parent}>
       <View style={styles.bgWrapper}>
