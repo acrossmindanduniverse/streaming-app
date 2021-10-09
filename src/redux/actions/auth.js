@@ -1,5 +1,5 @@
 import {request} from '../../helpers/request';
-import {API_URL, API_KEY, ACCESS_TOKEN} from '@env';
+import {API_URL, API_KEY} from '@env';
 
 export const createGuestSession = () => async dispatch => {
   const {data} = await request().get(
@@ -35,23 +35,46 @@ export const createSessionWithLogin = setData => async dispatch => {
       type: 'CREATE_SESSION_WITH_LOGIN',
       payload: data,
     });
+    dispatch({
+      type: 'LOGIN_ERROR_MESSAGE_DEFAULT',
+    });
   } catch (err) {
     dispatch({
-      payload: 'CREATE_SESSION_WITH_LOGIN_REJECTED',
+      type: 'CREATE_SESSION_WITH_LOGIN_REJECTED',
       error: err.response.data,
     });
   }
 };
 
-export const createSessionWithAccessToken = () => async dispatch => {
-  const {data} = await request().post(
-    `${API_URL}/authentication/session/convert/4?api_key=${API_KEY}`,
-    {
-      access_token: ACCESS_TOKEN,
-    },
-  );
+export const createSessionWithAccessToken =
+  (token, setData) => async dispatch => {
+    const form = new URLSearchParams();
+    form.append('request_token', setData.request_token);
+    try {
+      const {data} = await request(token).post(
+        `${API_URL}/authentication/session/convert/4?api_key=${API_KEY}`,
+        form,
+      );
+      dispatch({
+        type: 'CREATE_SESSION_WITH_ACCESS_TOKEN',
+        payload: data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'CREATE_SESSION_WITH_ACCESS_TOKEN_REJECTED',
+        error: err.response.data,
+      });
+    }
+  };
+
+export const authDefault = () => dispatch => {
   dispatch({
-    type: 'CREATE_SESSION_WITH_ACCESS_TOKEN',
-    payload: data,
+    type: 'AUTH_DEFAULT',
+  });
+};
+
+export const loginErrorMessageDefault = () => dispatch => {
+  dispatch({
+    type: 'LOGIN_ERROR_MESSAGE_DEFAULT',
   });
 };

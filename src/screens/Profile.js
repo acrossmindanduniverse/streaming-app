@@ -12,12 +12,19 @@ import {ContentWrapper, PrimaryModal} from '../components/primary';
 import {BackGroundImage} from './../components/primary';
 import bg from '../assets/profile.jpg';
 import {WatchList} from '../components/headers';
+import {useDispatch} from 'react-redux';
+import {authDefault} from '../redux/actions/auth';
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [modal, setModal] = React.useState(false);
 
   const showModal = visible => {
     setModal(visible);
+  };
+
+  const handleSignOut = () => {
+    dispatch(authDefault());
   };
 
   return (
@@ -35,13 +42,23 @@ const Profile = () => {
       <ContentWrapper
         content={
           <View style={{flex: 1, paddingVertical: 30}}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{paddingHorizontal: 15}}>
-                <Image style={styles.profilePicWrapper} />
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{paddingHorizontal: 15}}>
+                  <Image style={styles.profilePicWrapper} />
+                </View>
+                <View>
+                  <Text style={styles.primaryText}>Username</Text>
+                  <Text style={styles.primaryText}>Member start</Text>
+                </View>
               </View>
               <View>
-                <Text style={styles.primaryText}>Username</Text>
-                <Text style={styles.primaryText}>Member start</Text>
+                <TouchableOpacity
+                  onPress={handleSignOut}
+                  style={styles.signOutBtn}>
+                  <Text style={styles.primaryText}>Sign Out</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{flex: 1}}>
@@ -119,6 +136,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: 30,
     color: '#fff',
+  },
+  signOutBtn: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: 'pink',
   },
 });
 

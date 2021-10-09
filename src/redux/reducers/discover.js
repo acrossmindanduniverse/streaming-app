@@ -1,20 +1,34 @@
 const initialState = {
-  movies: [],
-  moviePopularDetails: {},
+  popularProducts: [],
+  products: [],
+  details: {},
+  genres: [],
 };
 
 const discover = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_MOVIE_POPULAR_LIST': {
+    case 'GET_POPULAR_LIST': {
       return {
         ...state,
-        movies: action.payload,
+        popularProducts: action.payload,
       };
     }
-    case 'GET_MOVIE_DETAILS': {
+    case 'GET_LIST': {
       return {
         ...state,
-        movieDetails: action.payload,
+        products: action.payload,
+      };
+    }
+    case 'GET_DETAILS': {
+      return {
+        ...state,
+        details: action.payload,
+      };
+    }
+    case 'GET_GENRES': {
+      return {
+        ...state,
+        genres: action.payload,
       };
     }
     default: {

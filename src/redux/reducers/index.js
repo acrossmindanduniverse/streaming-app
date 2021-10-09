@@ -4,6 +4,7 @@ import persistReducer from 'redux-persist/es/persistReducer';
 
 import auth from './auth';
 import discover from './discover';
+import user from './user';
 
 const persistAuth = {
   storage: AsyncStorage,
@@ -13,6 +14,7 @@ const persistAuth = {
 const reducer = combineReducers({
   auth: persistReducer(persistAuth, auth),
   discover,
+  user,
 });
 
 export default reducer;

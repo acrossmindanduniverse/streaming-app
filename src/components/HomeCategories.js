@@ -3,48 +3,35 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, FlatList, Image, Text, StyleSheet} from 'react-native';
-import tmdbBg from '../../src/assets/tmdb-logo.png';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {image} from '../helpers/request';
-import {getMovieDetails} from '../redux/actions/discover';
+import {getDetails} from '../redux/actions/discover';
+import {arrMonth, NoBackDrop} from './primary';
 
-const arrMonth = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-export const Streaming = ({func}) => {
+export const Popular = ({name, func}) => {
+  const {popularProducts} = useSelector(state => state.discover);
   const dispatch = useDispatch();
-  const {movies} = useSelector(state => state.discover);
   const [getId, setGetId] = React.useState(0);
 
   React.useEffect(() => {
     if (getId) {
-      dispatch(getMovieDetails(getId));
+      dispatch(getDetails(name, getId));
     }
   }, [getId]);
 
   return (
     <View>
       <FlatList
-        keyExtractor={index => String(index)}
+        keyExtractor={keyItem => String(keyItem)}
         horizontal={true}
-        data={movies.results}
+        data={popularProducts.results}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
-              func();
+              func({
+                name: name,
+              });
               setGetId(item.id);
             }}
             style={{
@@ -54,22 +41,31 @@ export const Streaming = ({func}) => {
               alignItems: 'center',
             }}>
             <View>
-              {console.log(item.id, 'id')}
-              <Image
-                source={{uri: `${image}/${item.backdrop_path}`}}
-                style={{
-                  borderRadius: 15,
-                  width: 350,
-                  height: 350,
-                }}
-                resizeMode="contain"
-              />
+              {item.backdrop_path !== null ? (
+                <Image
+                  source={{uri: `${image}/${item.backdrop_path}`}}
+                  style={{
+                    borderRadius: 15,
+                    width: 250,
+                    height: 250,
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <NoBackDrop />
+              )}
             </View>
-            <Text style={styles.primaryText}>{item.title}</Text>
+            <Text style={styles.primaryText}>{item.title || item.name}</Text>
             <Text style={styles.primaryText}>
-              {`${arrMonth[parseInt(item.release_date.split('-')[1])]} ${
-                item.release_date.split('-')[2]
-              }, ${item.release_date.split('-')[0]}`}
+              {`${
+                arrMonth[
+                  parseInt(
+                    (item.release_date || item.first_air_date).split('-')[1],
+                  )
+                ]
+              } ${(item.release_date || item.first_air_date).split('-')[2]}, ${
+                (item.release_date || item.first_air_date).split('-')[0]
+              }`}
             </Text>
           </TouchableOpacity>
         )}
@@ -78,34 +74,78 @@ export const Streaming = ({func}) => {
   );
 };
 
-export const Movies = ({func}) => {
+export const FreeToWatch = ({name, func}) => {
+  const {products} = useSelector(state => state.discover);
+  const dispatch = useDispatch();
+  const [getId, setGetId] = React.useState(0);
+
+  React.useEffect(() => {
+    if (getId) {
+      dispatch(getDetails(name, getId));
+    }
+  }, [getId]);
+
   return (
     <View>
       <FlatList
-        keyExtractor={item => String(item)}
+        keyExtractor={keyItem2nd => String(keyItem2nd)}
         horizontal={true}
-        data={[1, 2, 3, 4, 5]}
+        data={products.results}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={func}
+            onPress={() => {
+              func({
+                name: name,
+              });
+              setGetId(item.id);
+            }}
             style={{
-              backgroundColor: 'grey',
-              marginHorizontal: 20,
-              padding: 50,
+              height: 450,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <View>
-              <Image
-                source={tmdbBg}
-                style={{
-                  borderRadius: 15,
-                  width: 200,
-                }}
-                resizeMode="contain"
-              />
+            <View style={{flex: 1}}>
+              {item.backdrop_path !== null ? (
+                <Image
+                  source={{uri: `${image}/${item.backdrop_path}`}}
+                  style={{
+                    borderRadius: 15,
+                    width: 250,
+                    height: 250,
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <NoBackDrop />
+              )}
             </View>
-            <Text>123123</Text>
+            <View
+              style={{
+                // flex: 1,
+                height: 120,
+                width: 350,
+              }}>
+              <Text style={styles.primaryText}>{item.title || item.name}</Text>
+              {(item.release_date || item.first_air_date) !== undefined ? (
+                <Text style={styles.primaryText}>
+                  {`${
+                    arrMonth[
+                      parseInt(
+                        (item.release_date || item.first_air_date).split(
+                          '-',
+                        )[1],
+                      ) + 1
+                    ]
+                  } ${
+                    (item.release_date || item.first_air_date).split('-')[2]
+                  }, ${
+                    (item.release_date || item.first_air_date).split('-')[0]
+                  }`}
+                </Text>
+              ) : (
+                <Text style={{padding: 5}} />
+              )}
+            </View>
           </TouchableOpacity>
         )}
       />
@@ -116,6 +156,7 @@ export const Movies = ({func}) => {
 const styles = StyleSheet.create({
   primaryText: {
     fontFamily: 'Poppins-Light',
+    textAlign: 'center',
     fontSize: 20,
     color: '#fff',
   },

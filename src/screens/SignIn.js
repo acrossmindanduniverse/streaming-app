@@ -1,20 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import signinBg from '../assets/signin.jpg';
-import {createSessionWithLogin} from './../redux/actions/auth';
+import {
+  createSessionWithLogin,
+  loginErrorMessageDefault,
+} from './../redux/actions/auth';
 import {
   AuthButton,
   BackGroundImage,
   ContentWrapper,
+  ErrorMessage,
   ScreenWidth,
 } from './../components/primary';
 
-const Signin = ({navigation}) => {
+const Signin = () => {
   const dispatch = useDispatch();
-  const {requestToken} = useSelector(state => state.auth);
+  const {requestToken, loginErrMsg} = useSelector(state => state.auth);
 
   const [login, setLogin] = React.useState({
     username: '',
@@ -24,14 +29,22 @@ const Signin = ({navigation}) => {
 
   const handleLogin = () => {
     dispatch(createSessionWithLogin(login));
-    // .then(() => {
-    navigation.navigate('home');
-    // });
   };
+
+  React.useEffect(() => {
+    if (loginErrMsg.status_message !== '') {
+      if (login.username === '' && login.password === '') {
+        setTimeout(() => {
+          dispatch(loginErrorMessageDefault());
+        }, 3000);
+      }
+    }
+  }, [loginErrMsg.status_message, login]);
 
   return (
     <View>
       <BackGroundImage src={signinBg} />
+      <ErrorMessage str={loginErrMsg.status_message} />
       <ContentWrapper
         content={
           <View style={{flex: 1}}>

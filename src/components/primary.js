@@ -11,8 +11,24 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
 } from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 export const ScreenWidth = Dimensions.get('window').width;
+
+export const arrMonth = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 export const ContentWrapper = ({content}) => {
   return <View style={styles.contentWrapper}>{content}</View>;
@@ -25,6 +41,39 @@ export const BackGroundImage = ({src}) => {
       resizeMode="cover"
       style={{height: '100%', width: '100%'}}
     />
+  );
+};
+
+export const NoBackgroundImage = () => {
+  return (
+    <View
+      style={{
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+      }}>
+      <View style={{borderRadius: 15, padding: 30}}>
+        <Entypo name="image" size={50} />
+      </View>
+    </View>
+  );
+};
+
+export const NoBackDrop = () => {
+  return (
+    <View
+      style={{
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 70,
+        paddingVertical: 100,
+      }}>
+      <Entypo name="image" size={50} />
+    </View>
   );
 };
 
@@ -45,6 +94,22 @@ export const PrimaryModal = ({open, modal, str}) => {
         </TouchableWithoutFeedback>
       </TouchableOpacity>
     </Modal>
+  );
+};
+
+export const ErrorMessage = ({str}) => {
+  return (
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingHorizontal: 30,
+        width: '100%',
+        position: 'absolute',
+      }}>
+      <Text style={styles.errorMessageText}>{str}</Text>
+    </View>
   );
 };
 
@@ -74,6 +139,12 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 50,
     justifyContent: 'center',
+  },
+  errorMessageText: {
+    color: '#ff9375',
+    textAlign: 'center',
+    fontSize: 23,
+    fontFamily: 'Poppins-Light',
   },
   signInBtn: {
     backgroundColor: '#fff',

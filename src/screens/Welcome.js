@@ -23,9 +23,9 @@ const Welcome = ({navigation}) => {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('signUp')}
+          onPress={() => navigation.navigate('home')}
           style={styles.primaryBtn}>
-          <Text style={styles.primaryText}>Sign Up</Text>
+          <Text style={styles.primaryText}>Explore</Text>
         </TouchableOpacity>
         <View style={{padding: 10}} />
         <TouchableOpacity

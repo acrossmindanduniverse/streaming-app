@@ -3,7 +3,7 @@ const initialState = {
   requestToken: {},
   loginSession: {},
   sessionWithAccessToken: {},
-  loginErrMsg: '',
+  loginErrMsg: {},
 };
 
 const auth = (state = initialState, action) => {
@@ -24,7 +24,14 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         loginSession: action.payload,
+        splashToggle: !state.splashToggle,
+      };
+    }
+    case 'CREATE_SESSION_WITH_LOGIN_REJECTED': {
+      return {
+        ...state,
         loginErrMsg: action.error,
+        splashToggle: false,
       };
     }
     case 'CREATE_SESSION_WITH_ACCESS_TOKEN': {
@@ -32,6 +39,20 @@ const auth = (state = initialState, action) => {
         ...state,
         sessionWithAccessToken: action.payload,
       };
+    }
+    case 'CREATE_SESSION_WITH_ACCESS_TOKEN_REJECTED': {
+      return {
+        ...state,
+      };
+    }
+    case 'LOGIN_ERROR_MESSAGE_DEFAULT': {
+      return {
+        ...state,
+        loginErrMsg: {},
+      };
+    }
+    case 'AUTH_DEFAULT': {
+      return state;
     }
     default: {
       return {
