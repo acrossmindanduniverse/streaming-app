@@ -8,13 +8,14 @@ import signinBg from '../assets/signin.jpg';
 import {
   createSessionWithLogin,
   loginErrorMessageDefault,
+  createGuestSession,
+  createRequestToken,
 } from './../redux/actions/auth';
 import {
   AuthButton,
   BackGroundImage,
   ContentWrapper,
   ErrorMessage,
-  ScreenWidth,
 } from './../components/primary';
 
 const Signin = () => {
@@ -30,6 +31,11 @@ const Signin = () => {
   const handleLogin = () => {
     dispatch(createSessionWithLogin(login));
   };
+
+  React.useEffect(() => {
+    dispatch(createGuestSession());
+    dispatch(createRequestToken());
+  }, []);
 
   React.useEffect(() => {
     if (loginErrMsg.status_message !== '') {
@@ -86,10 +92,9 @@ const Signin = () => {
 
 const styles = StyleSheet.create({
   textInput: {
-    width: ScreenWidth / 1.2,
     fontFamily: 'Poppins-Light',
     color: '#fff',
-    fontSize: 18,
+    fontSize: 15,
     borderRadius: 15,
     borderWidth: 2,
     borderColor: '#032541',

@@ -35,7 +35,6 @@ export const Popular = ({name, func}) => {
               setGetId(item.id);
             }}
             style={{
-              marginHorizontal: 20,
               padding: 30,
               justifyContent: 'center',
               alignItems: 'center',
@@ -46,8 +45,8 @@ export const Popular = ({name, func}) => {
                   source={{uri: `${image}/${item.backdrop_path}`}}
                   style={{
                     borderRadius: 15,
-                    width: 250,
-                    height: 250,
+                    width: 200,
+                    height: 150,
                   }}
                   resizeMode="contain"
                 />
@@ -100,7 +99,7 @@ export const FreeToWatch = ({name, func}) => {
               setGetId(item.id);
             }}
             style={{
-              height: 450,
+              padding: 30,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
@@ -111,7 +110,7 @@ export const FreeToWatch = ({name, func}) => {
                   style={{
                     borderRadius: 15,
                     width: 250,
-                    height: 250,
+                    height: 150,
                   }}
                   resizeMode="contain"
                 />
@@ -121,7 +120,6 @@ export const FreeToWatch = ({name, func}) => {
             </View>
             <View
               style={{
-                // flex: 1,
                 height: 120,
                 width: 350,
               }}>
@@ -157,7 +155,7 @@ const styles = StyleSheet.create({
   primaryText: {
     fontFamily: 'Poppins-Light',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 15,
     color: '#fff',
   },
 });

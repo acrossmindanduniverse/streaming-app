@@ -14,9 +14,9 @@ const redux = reduxConfig();
 const Main = () => {
   return (
     <Provider store={redux.store}>
-      {/* <PersistGate persistor={redux.persistor}> */}
-      <App />
-      {/* </PersistGate> */}
+      <PersistGate persistor={redux.persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   );
 };

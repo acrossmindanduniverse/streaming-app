@@ -2,7 +2,6 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Welcome from './src/screens/Welcome';
-import SignUp from './src/screens/SignUp';
 import Signin from './src/screens/SignIn';
 import Home from './src/screens/Home';
 import Detail from './src/screens/Detail';
@@ -16,8 +15,6 @@ const Stack = createStackNavigator();
 const App = () => {
   const {loginSession} = useSelector(state => state.auth);
   const {splashToggle} = useSelector(state => state.user);
-
-  console.log(loginSession);
 
   return (
     <NavigationContainer>
@@ -34,11 +31,6 @@ const App = () => {
             options={{headerShown: false}}
             name="welcome"
             component={Welcome}
-          />
-          <Stack.Screen
-            options={{headerShown: false}}
-            name="signUp"
-            component={SignUp}
           />
           <Stack.Screen
             options={{headerShown: false}}

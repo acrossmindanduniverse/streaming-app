@@ -41,7 +41,6 @@ export const addOrRemoveToWatchList =
 
 export const getWatchList =
   (account_id, name, session_id) => async dispatch => {
-    const movie = '';
     try {
       const {data} = await request().get(
         `${API_URL}/account/${account_id}/watchlist/${name}?api_key=${API_KEY}&language=en-US&session_id=${session_id}&sort_by=created_at.asc&page=1`,

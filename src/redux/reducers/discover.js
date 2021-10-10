@@ -2,7 +2,6 @@ const initialState = {
   popularProducts: [],
   products: [],
   details: {},
-  genres: [],
 };
 
 const discover = (state = initialState, action) => {
@@ -23,12 +22,6 @@ const discover = (state = initialState, action) => {
       return {
         ...state,
         details: action.payload,
-      };
-    }
-    case 'GET_GENRES': {
-      return {
-        ...state,
-        genres: action.payload,
       };
     }
     default: {

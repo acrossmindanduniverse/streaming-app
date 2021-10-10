@@ -46,25 +46,14 @@ const auth = (state = initialState, action) => {
         userSession: action.payload,
       };
     }
-    case 'CREATE_SESSION_WITH_ACCESS_TOKEN': {
-      return {
-        ...state,
-        sessionWithAccessToken: action.payload,
-      };
-    }
-    case 'CREATE_SESSION_WITH_ACCESS_TOKEN_REJECTED': {
-      return {
-        ...state,
-      };
-    }
     case 'LOGIN_ERROR_MESSAGE_DEFAULT': {
       return {
         ...state,
         loginErrMsg: {},
       };
     }
-    case 'AUTH_DEFAULT': {
-      return state;
+    case 'AUTH_SIGN_OUT': {
+      return initialState;
     }
     default: {
       return {

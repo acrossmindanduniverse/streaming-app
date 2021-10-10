@@ -2,22 +2,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {
   BackGroundImage,
   ContentWrapper,
   NoBackgroundImage,
+  SuccessMessage,
 } from '../components/primary';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {image} from '../helpers/request';
 import {useSelector, useDispatch} from 'react-redux';
-import {getGenres} from './../redux/actions/discover';
-import DetailBtn from '../components/Detail';
+import {DetailBtn, DetailSecondComponent} from '../components/Detail';
 import {addOrRemoveToWatchList} from '../redux/actions/user';
-
 const Detail = props => {
   const dispatch = useDispatch();
-  const {details, genres} = useSelector(state => state.discover);
+  const {details} = useSelector(state => state.discover);
   const {userDetails} = useSelector(state => state.user);
   const {userSession} = useSelector(state => state.auth);
 
@@ -25,6 +24,7 @@ const Detail = props => {
   const {name} = props.route.params;
 
   const [duration, setDuration] = React.useState();
+  const [addToWatchList, setAddToWatchList] = React.useState(false);
 
   const splitDuration = details.runtime?.toString().split('');
 
@@ -63,12 +63,6 @@ const Detail = props => {
     }
   }, [details.runtime, splitDuration, duration]);
 
-  console.log(duration);
-
-  React.useEffect(() => {
-    dispatch(getGenres(name));
-  }, []);
-
   const handleAddToWatchList = () => {
     const addList = {
       media_type: name,
@@ -77,8 +71,18 @@ const Detail = props => {
     };
     dispatch(
       addOrRemoveToWatchList(userDetails.id, userSession.session_id, addList),
-    );
+    ).then(() => {
+      setAddToWatchList(true);
+    });
   };
+
+  React.useEffect(() => {
+    if (addToWatchList) {
+      setTimeout(() => {
+        setAddToWatchList(false);
+      }, 2000);
+    }
+  });
 
   return (
     getGenreList !== undefined && (
@@ -92,19 +96,19 @@ const Detail = props => {
           content={
             <View
               style={{
-                flex: 1,
                 justifyContent: 'space-between',
                 flexDirection: 'row',
-                paddingHorizontal: 25,
               }}>
-              <View>
+              <ScrollView>
+                <View style={{height: 40}}>
+                  {addToWatchList && (
+                    <SuccessMessage str="Added To Watchlist" />
+                  )}
+                </View>
                 <Text style={styles.descriptionText}>
                   {details.title || details.original_name}
                 </Text>
-                <View
-                  style={{
-                    paddingVertical: 20,
-                  }}>
+                <View>
                   <Entypo name="tv" size={25} color="#fff" />
                   <View style={{padding: 10}} />
                   <Text style={styles.secondaryText}>
@@ -117,37 +121,8 @@ const Detail = props => {
                         : `${details.last_episode_to_air?.episode_number} episode`)}
                   </Text>
                 </View>
-                <View style={{paddingRight: 50}}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Light',
-                      fontSize: 23,
-                      marginVertical: 10,
-                      color: 'rgb(224, 224, 224)',
-                    }}>
-                    {details.tagline}
-                  </Text>
-                  <View style={{paddingTop: 50}}>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 23,
-                        color: '#fff',
-                        marginBottom: 5,
-                      }}>
-                      Overview
-                    </Text>
-                    {details.overview !== '' ? (
-                      <Text style={styles.primaryText}>{details.overview}</Text>
-                    ) : (
-                      <Text style={styles.primaryText}>
-                        This {name === 'movie' ? 'movie' : 'show'} doesn't have
-                        an overview, yet
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              </View>
+                <DetailSecondComponent />
+              </ScrollView>
               <DetailBtn details={details} func={handleAddToWatchList} />
             </View>
           }
@@ -161,13 +136,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: '#fff',
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 30,
-  },
-  primaryText: {
-    fontFamily: 'Poppins-Light',
-    color: '#fff',
     fontSize: 18,
-    textAlign: 'justify',
   },
   secondaryText: {
     fontSize: 15,

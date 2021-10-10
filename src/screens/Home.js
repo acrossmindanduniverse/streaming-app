@@ -7,15 +7,12 @@ import {HomeHeader, HomeHeader2nd, HomeInfo} from '../components/headers';
 import {useDispatch, useSelector} from 'react-redux';
 import {createUserSession} from '../redux/actions/auth';
 import {getPopularProducts, getProducts} from './../redux/actions/discover';
-
-import {ACCESS_TOKEN} from '@env';
+import {getUserDetails} from '../redux/actions/user';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const [popularPage, setPopularPage] = React.useState(1);
   const {loginSession, userSession} = useSelector(state => state.auth);
-  const [page, setPage] = React.useState(1);
   const [popularScreen, setPopularScreen] = React.useState('movie');
   const [screen, setScreen] = React.useState('movie');
 
@@ -25,7 +22,9 @@ const Home = ({navigation}) => {
     }
   }, []);
 
-  console.log(userSession);
+  React.useEffect(() => {
+    dispatch(getUserDetails(userSession.session_id));
+  }, [userSession.session_id]);
 
   const handleConditionalProfileScreen = () => {
     if (loginSession.request_token !== undefined) {
@@ -44,15 +43,20 @@ const Home = ({navigation}) => {
   };
 
   React.useEffect(() => {
-    dispatch(getPopularProducts(popularScreen, popularPage));
-  }, [popularScreen, popularPage]);
+    dispatch(getPopularProducts(popularScreen));
+  }, [popularScreen]);
 
   React.useEffect(() => {
-    dispatch(getProducts(screen, page));
-  }, [screen, page]);
+    dispatch(getProducts(screen));
+  }, [screen]);
 
   return (
-    <View style={{flex: 1, padding: 30, backgroundColor: '#001'}}>
+    <View
+      style={{
+        padding: 10,
+        paddingHorizontal: 5,
+        backgroundColor: '#001',
+      }}>
       <HomeInfo func={handleConditionalProfileScreen} />
       <ScrollView>
         <HomeHeader screen={popularScreen} setScreen={setPopularScreen} />

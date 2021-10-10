@@ -65,12 +65,12 @@ export const NoBackDrop = () => {
   return (
     <View
       style={{
-        borderRadius: 15,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 70,
-        paddingVertical: 100,
+        borderRadius: 15,
+        width: 250,
+        height: 150,
       }}>
       <Entypo name="image" size={50} />
     </View>
@@ -128,6 +128,18 @@ export const ErrorMessage = ({str}) => {
   );
 };
 
+export const SuccessMessage = ({str}) => {
+  return (
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text style={styles.successMessage}>{str}</Text>
+    </View>
+  );
+};
+
 export const PrimarySpinner = () => {
   return (
     <View style={styles.contentWrapper}>
@@ -158,7 +170,7 @@ const styles = StyleSheet.create({
   errorMessageText: {
     color: '#ff9375',
     textAlign: 'center',
-    fontSize: 23,
+    fontSize: 18,
     fontFamily: 'Poppins-Light',
   },
   signInBtn: {
@@ -176,12 +188,18 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: '#fff',
-    padding: 50,
+    padding: 30,
     borderRadius: 10,
   },
   modalText: {
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Poppins-Light',
     textAlign: 'justify',
+  },
+  successMessage: {
+    fontSize: 15,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Light',
+    color: '#fff67a',
   },
 });

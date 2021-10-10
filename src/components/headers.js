@@ -96,7 +96,7 @@ export const Watchlist = ({name, setName, setDeleteName}) => {
           paddingBottom: 10,
         }}
       />
-      <Text style={styles.watchListText}>Watch List</Text>
+      <Text style={styles.watchlistText}>Watchlist</Text>
       <View style={styles.listNavigation}>
         <TouchableOpacity
           onPress={() => {
@@ -183,13 +183,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15,
-    width: ScreenWidth / 1.5,
     borderRadius: 25,
     borderWidth: 2,
     borderColor: '#032541',
   },
-  watchListText: {
-    fontSize: 30,
+  watchlistText: {
+    fontSize: 20,
     paddingTop: 15,
     fontFamily: 'Poppins-SemiBold',
     color: '#fff',
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
   btnNavigation: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: ScreenWidth / 4,
+    width: ScreenWidth / 2.8,
     borderRadius: 15,
     borderColor: '#fff',
     borderWidth: 1,
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
   btnNavigationActive: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: ScreenWidth / 4,
+    width: ScreenWidth / 2.8,
     borderRadius: 15,
     borderColor: '#fff',
     backgroundColor: '#fff',
@@ -221,18 +220,18 @@ const styles = StyleSheet.create({
   btnListNavigation: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150,
+    width: 100,
     padding: 15,
   },
   primaryText: {
     fontFamily: 'Poppins-SemiBold',
     color: '#fff',
-    fontSize: 23,
+    fontSize: 15,
   },
   primaryTextActive: {
     fontFamily: 'Poppins-SemiBold',
     color: '#032541',
-    fontSize: 23,
+    fontSize: 15,
   },
   profileBtn: {
     justifyContent: 'center',
@@ -256,7 +255,7 @@ const styles = StyleSheet.create({
   btnListNavigationActive: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150,
+    width: 100,
     borderRadius: 15,
     backgroundColor: '#032541',
     padding: 15,
