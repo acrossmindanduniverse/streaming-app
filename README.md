@@ -4,8 +4,10 @@
 
 **API Source**: [TMDB/developers](https://developers.themoviedb.org/3)
 
-![](https://i.imgur.com/7AgyKQM.png)![](https://i.imgur.com/A3FFrUa.png)
-![](https://i.imgur.com/knsrXjg.png)
+![](https://i.imgur.com/fZzkxkk.png)![](https://i.imgur.com/dyAmdxj.png)
+![](https://i.imgur.com/TcRuht6.png)
+
+
 
 Equipments:
 1. React Native
