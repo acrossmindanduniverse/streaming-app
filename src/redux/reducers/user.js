@@ -1,5 +1,7 @@
 const initialState = {
   splashToggle: false,
+  userDetails: {},
+  watchlist: [],
 };
 
 const user = (state = initialState, action) => {
@@ -14,6 +16,28 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         splashToggle: true,
+      };
+    }
+    case 'GET_USER_DETAILS': {
+      return {
+        ...state,
+        userDetails: action.payload,
+      };
+    }
+    case 'ADD_OR_REMOVE_TO_WATCH_LIST': {
+      return {
+        ...state,
+      };
+    }
+    case 'GET_WATCH_LIST_REJECTED': {
+      return {
+        ...state,
+      };
+    }
+    case 'GET_WATCH_LIST': {
+      return {
+        ...state,
+        watchlist: action.payload,
       };
     }
     default: {

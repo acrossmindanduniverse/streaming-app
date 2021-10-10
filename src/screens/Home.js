@@ -5,7 +5,7 @@ import {View, ScrollView} from 'react-native';
 import {FreeToWatch, Popular} from '../components/HomeCategories';
 import {HomeHeader, HomeHeader2nd, HomeInfo} from '../components/headers';
 import {useDispatch, useSelector} from 'react-redux';
-import {createSessionWithAccessToken} from '../redux/actions/auth';
+import {createUserSession} from '../redux/actions/auth';
 import {getPopularProducts, getProducts} from './../redux/actions/discover';
 
 import {ACCESS_TOKEN} from '@env';
@@ -14,20 +14,18 @@ const Home = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [popularPage, setPopularPage] = React.useState(1);
-  const {loginSession} = useSelector(state => state.auth);
+  const {loginSession, userSession} = useSelector(state => state.auth);
   const [page, setPage] = React.useState(1);
   const [popularScreen, setPopularScreen] = React.useState('movie');
   const [screen, setScreen] = React.useState('movie');
 
   React.useEffect(() => {
     if (loginSession.request_token !== undefined) {
-      dispatch(
-        createSessionWithAccessToken(ACCESS_TOKEN, {
-          request_token: loginSession.request_token,
-        }),
-      );
+      dispatch(createUserSession(loginSession.request_token));
     }
   }, []);
+
+  console.log(userSession);
 
   const handleConditionalProfileScreen = () => {
     if (loginSession.request_token !== undefined) {

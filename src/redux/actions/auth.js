@@ -66,6 +66,17 @@ export const createSessionWithAccessToken =
       });
     }
   };
+// https://api.themoviedb.org/3/authentication/session/new?api_key=9747f279f7417d477fd0ad2f24f70225&request_token=f3aaada9b505c3dc69775aa2dd4720cadbfa0f9c
+
+export const createUserSession = token => async dispatch => {
+  const {data} = await request().get(
+    `${API_URL}/authentication/session/new?api_key=${API_KEY}&request_token=${token}`,
+  );
+  dispatch({
+    type: 'CREATE_USER_SESSION',
+    payload: data,
+  });
+};
 
 export const authDefault = () => dispatch => {
   dispatch({

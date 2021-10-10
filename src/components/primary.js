@@ -77,19 +77,34 @@ export const NoBackDrop = () => {
   );
 };
 
-export const PrimaryModal = ({open, modal, str}) => {
+export const PrimaryModal = ({open, modal, str, func}) => {
   return (
     <Modal
       visible={modal}
-      onRequestClose={() => open(false)}
+      onRequestClose={() =>
+        open({
+          ...modal,
+          boolean: false,
+        })
+      }
       transparent={true}
       animationType={'fade'}>
       <TouchableOpacity
-        onPress={() => open(false)}
+        onPress={() =>
+          open({
+            ...modal,
+            boolean: false,
+          })
+        }
         style={styles.contentWrapper}>
         <TouchableWithoutFeedback>
           <View style={styles.modal}>
             <Text style={styles.modalText}>{str}</Text>
+            <View style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity onPress={func}>
+                <Entypo name="trash" size={25} />
+              </TouchableOpacity>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </TouchableOpacity>
@@ -161,11 +176,11 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: '#fff',
-    padding: 30,
+    padding: 50,
     borderRadius: 10,
   },
   modalText: {
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: 'Poppins-Light',
     textAlign: 'justify',
   },

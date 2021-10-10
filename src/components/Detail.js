@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
-const DetailBtn = ({details}) => {
+const DetailBtn = ({details, func}) => {
   return (
     <View
       style={{
@@ -19,7 +19,7 @@ const DetailBtn = ({details}) => {
           <Icon name="heart" size={25} style={styles.secondaryIcon} />
         </TouchableOpacity>
         <View style={{padding: 20}} />
-        <TouchableOpacity style={styles.primaryWrapper}>
+        <TouchableOpacity onPress={func} style={styles.primaryWrapper}>
           <Fontisto name="favorite" size={25} style={styles.secondaryIcon} />
         </TouchableOpacity>
         <View style={{padding: 20}} />

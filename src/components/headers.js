@@ -81,7 +81,7 @@ export const HomeInfo = ({func}) => {
   );
 };
 
-export const WatchList = () => {
+export const Watchlist = ({name, setName, setDeleteName}) => {
   return (
     <View
       style={{
@@ -98,11 +98,29 @@ export const WatchList = () => {
       />
       <Text style={styles.watchListText}>Watch List</Text>
       <View style={styles.listNavigation}>
-        <TouchableOpacity style={styles.btnListNavigation}>
+        <TouchableOpacity
+          onPress={() => {
+            setName('movies');
+            setDeleteName('movie');
+          }}
+          style={
+            name === 'movies'
+              ? styles.btnListNavigationActive
+              : styles.btnListNavigation
+          }>
           <Text style={styles.primaryText}>Movies</Text>
         </TouchableOpacity>
         <View style={{padding: 10, paddingHorizontal: 30}} />
-        <TouchableOpacity style={styles.btnListNavigation}>
+        <TouchableOpacity
+          onPress={() => {
+            setName('tv');
+            setDeleteName('tv');
+          }}
+          style={
+            name === 'tv'
+              ? styles.btnListNavigationActive
+              : styles.btnListNavigation
+          }>
           <Text style={styles.primaryText}>TV</Text>
         </TouchableOpacity>
       </View>
@@ -203,8 +221,8 @@ const styles = StyleSheet.create({
   btnListNavigation: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: ScreenWidth / 4,
-    borderRadius: 15,
+    width: 150,
+    padding: 15,
   },
   primaryText: {
     fontFamily: 'Poppins-SemiBold',
@@ -234,5 +252,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#032541',
     zIndex: 1,
+  },
+  btnListNavigationActive: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150,
+    borderRadius: 15,
+    backgroundColor: '#032541',
+    padding: 15,
   },
 });

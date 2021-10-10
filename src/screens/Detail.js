@@ -13,13 +13,17 @@ import {image} from '../helpers/request';
 import {useSelector, useDispatch} from 'react-redux';
 import {getGenres} from './../redux/actions/discover';
 import DetailBtn from '../components/Detail';
+import {addOrRemoveToWatchList} from '../redux/actions/user';
 
 const Detail = props => {
   const dispatch = useDispatch();
   const {details, genres} = useSelector(state => state.discover);
+  const {userDetails} = useSelector(state => state.user);
+  const {userSession} = useSelector(state => state.auth);
 
   const getGenreList = details.genres?.map(e => e.name);
   const {name} = props.route.params;
+
   const [duration, setDuration] = React.useState();
 
   const splitDuration = details.runtime?.toString().split('');
@@ -65,9 +69,16 @@ const Detail = props => {
     dispatch(getGenres(name));
   }, []);
 
-  // React.useEffect(() => {
-  //   route.params.setGetId(0);
-  // }, []);
+  const handleAddToWatchList = () => {
+    const addList = {
+      media_type: name,
+      media_id: details.id,
+      watchlist: true,
+    };
+    dispatch(
+      addOrRemoveToWatchList(userDetails.id, userSession.session_id, addList),
+    );
+  };
 
   return (
     getGenreList !== undefined && (
@@ -137,7 +148,7 @@ const Detail = props => {
                   </View>
                 </View>
               </View>
-              <DetailBtn details={details} />
+              <DetailBtn details={details} func={handleAddToWatchList} />
             </View>
           }
         />
